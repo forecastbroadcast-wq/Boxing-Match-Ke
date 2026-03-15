@@ -25,35 +25,28 @@
   </style>
 </head>
 <body>
-
 <div class="box">
   <h1>MBAVU VS MAJEMBE</h1>
   <h2>VURUGU APRIL 4, 2026 – KASARANI 🔥</h2>
-  
+ 
   <p class="tag"><strong>President Ruto pledged millions</strong> – Oga Obinna hosting – Dorcas Rigathi bought 400 tickets – Prize pool exploding!</p>
-  
+ 
   <div class="countdown" id="countdown">Loading countdown...</div>
-  
+ 
   <p class="tag">Pick your side NOW – be part of Kenyan history. The winner's fans will flex forever!</p>
-
   <input id="name" placeholder="Your Name / Nickname" required>
   <input id="email" placeholder="Your Email (for access + updates)" required type="email">
-
+  <input id="password" placeholder="Create a Password" required type="password">
   <h3>Choose Your Fighter</h3>
   <div class="team-select">
     <div id="mbavu" class="team-btn team-mbavu active" onclick="selectTeam('Mbavu')">Team Mbavu Destroyer</div>
     <div id="majembe" class="team-btn team-majembe" onclick="selectTeam('Majembe')">Team Majembe</div>
   </div>
-
   <button onclick="doSignup()">JOIN THE FIGHT & CLAIM YOUR SPOT</button>
-
   <p id="msg"></p>
-
-  <p class="trash">"Waiting KO" – "Majembe or Mbavu quits boxing if loses" – talks already wild!</p>
-
+  <p class="trash">"Mbavu will snatch girlfriend after KO" – "Majembe quits boxing if loses" – Trash talk already wild!</p>
   <p>Already picked a side? <span class="link" onclick="location.href='login.html'">Login here</span></p>
 </div>
-
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCWnR_nG5OrIdzCCuOjwRSioEFKi9nFVR5DifZqhM70QoN_FK3nFvqnjYaErc50A9E/exec";
 let selectedTeam = "Mbavu"; // default
@@ -83,16 +76,22 @@ updateCountdown();
 async function doSignup() {
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
   const msgEl = document.getElementById("msg");
 
-  if (!name || !email) {
+  if (!name || !email || !password) {
     msgEl.style.color = "#ff4444";
-    msgEl.textContent = "Fill name & email bro!";
+    msgEl.textContent = "Fill name, email & password!";
     return;
   }
   if (!email.includes("@")) {
     msgEl.style.color = "#ff4444";
     msgEl.textContent = "Valid email please";
+    return;
+  }
+  if (password.length < 6) {
+    msgEl.style.color = "#ff4444";
+    msgEl.textContent = "Password must be at least 6 characters";
     return;
   }
 
@@ -103,7 +102,8 @@ async function doSignup() {
   form.append("action", "signup");
   form.append("name", name);
   form.append("email", email);
-  form.append("team", selectedTeam);   // ← new field
+  form.append("team", selectedTeam);
+  form.append("password", password); // ← new field
 
   try {
     const r = await fetch(SCRIPT_URL, {method:"POST", body:form});
