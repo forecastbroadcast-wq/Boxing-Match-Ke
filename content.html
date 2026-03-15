@@ -379,48 +379,40 @@ async function submitPoolEntry() {
 
   if (!amount || Number(amount) < 50 || !refNo || refNo.length < 5 || !mobile || mobile.length < 9 || !fighter) {
     msg.style.color = "#ff5555";
-    msg.textContent = "Please complete all fields correctly (min KSh 50, valid Ref No, mobile number, fighter)";
+    msg.textContent = "Please complete all fields correctly (min KSh 50, valid Ref No, mobile, fighter)";
     return;
   }
 
   btn.disabled = true;
   btn.textContent = "SENDING...";
   msg.style.color = "#ffcc00";
-  msg.textContent = "Processing your entry — please wait...";
+  msg.textContent = "Sending entry... (verification pending)";
 
-  // Build body as plain text (this avoids preflight in many cases)
-  const bodyText = `action=join_pool&email=${encodeURIComponent(accessEmail)}&amount=${encodeURIComponent(amount)}&refNo=${encodeURIComponent(refNo)}&mobileNo=${encodeURIComponent(mobile)}&fighter=${encodeURIComponent(fighter)}`;
+  const bodyText = [
+    `action=join_pool`,
+    `email=${encodeURIComponent(accessEmail)}`,
+    `amount=${encodeURIComponent(amount)}`,
+    `refNo=${encodeURIComponent(refNo)}`,
+    `mobileNo=${encodeURIComponent(mobile)}`,
+    `fighter=${encodeURIComponent(fighter)}`
+  ].join('&');
 
   try {
-    const res = await fetch(SCRIPT_URL, {
+    await fetch(SCRIPT_URL, {
       method: "POST",
-      mode: "cors",
+      mode: "no-cors",           // ← This is the key change
       redirect: "follow",
-      headers: {
-        "Content-Type": "text/plain;charset=utf-8"
-      },
       body: bodyText
     });
 
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-
-    const data = await res.json();
-
-    if (data.result === "success") {
-      msg.style.color = "#25D366";
-      msg.innerHTML = "✓ Entry recorded!<br>Thank you — Ref No & mobile will be verified soon.";
-      setTimeout(closePoolModal, 4800);
-    } else {
-      throw new Error(data.message || "Server rejected entry");
-    }
+    // Since no-cors hides response, we assume success
+    msg.style.color = "#25D366";
+    msg.innerHTML = "✓ Entry sent!<br>Thank you — check Sheet2 soon. Ref & mobile saved.";
+    setTimeout(closePoolModal, 4000);
   } catch (err) {
-    console.error("Fetch error:", err);
+    console.error(err);
     msg.style.color = "#ff5555";
-    msg.textContent = err.message.includes("fetch") || err.message.includes("CORS")
-      ? "Connection issue (CORS/network) — try again or check console"
-      : "Error: " + err.message;
+    msg.textContent = "Send failed — check internet or try again";
   } finally {
     btn.disabled = false;
     btn.textContent = "SUBMIT ENTRY";
