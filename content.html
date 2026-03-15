@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mbavu vs Majembe Arena – April 4, 2026 🔥</title>
+  <style>
+    body {
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:#000;
+      color:#fff;
+      text-align:center;
+    }
+    header {
+      padding:30px 20px;
+      background:linear-gradient(#111,#000);
+      border-bottom:3px solid #e50914;
+    }
+    h1 {
+      margin:0;
+      font-size:2.8rem;
+      text-shadow:0 0 15px #e50914;
+    }
+    .welcome {
+      font-size:1.5rem;
+      color:#ffcc00;
+      margin:15px 0;
+    }
+    .countdown {
+      font-size:1.6rem;
+      color:#ff4444;
+      font-weight:bold;
+      margin:25px 0;
+      text-shadow:0 0 10px #ff4444;
+    }
+    .video-container {
+      position:relative;
+      padding-bottom:56.25%;
+      height:0;
+      overflow:hidden;
+      max-width:960px;
+      margin:30px auto;
+      background:#000;
+    }
+    .video-container iframe {
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+    }
+    .container {
+      max-width:1000px;
+      margin:0 auto;
+      padding:20px;
+    }
+    .event-info {
+      background:rgba(20,20,20,0.8);
+      border-radius:12px;
+      padding:25px;
+      margin:30px auto;
+      max-width:800px;
+      border:1px solid #333;
+      text-align:left;
+      line-height:1.6;
+    }
+    .gallery-section { margin:50px 0; }
+    .gallery-title {
+      font-size:2rem;
+      color:#e50914;
+      margin:40px 0 20px;
+      text-shadow:0 0 10px #e50914;
+    }
+    .gallery {
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:15px;
+    }
+    .gallery img {
+      max-width:300px;
+      border-radius:10px;
+      box-shadow:0 6px 20px rgba(229,9,20,0.3);
+      transition:0.3s;
+    }
+    .gallery img:hover { transform:scale(1.05); }
+    .share-btn {
+      font-size:1.4rem;
+      padding:16px 50px;
+      background:#25D366;
+      color:white;
+      border:none;
+      border-radius:10px;
+      margin:40px 20px;
+      cursor:pointer;
+      font-weight:bold;
+    }
+    .share-btn:hover {
+      background:#1ebe57;
+      transform:scale(1.05);
+    }
+
+    /* ── Prize Pool Section ── */
+    .prize-section {
+      margin:60px auto;
+      max-width:800px;
+      padding:30px;
+      background:rgba(229,9,20,0.15);
+      border-radius:16px;
+      border:2px dashed #e50914;
+    }
+    .prize-btn {
+      font-size:1.6rem;
+      padding:18px 70px;
+      background:linear-gradient(135deg,#e50914,#b3070f);
+      color:white;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:bold;
+      box-shadow:0 0 30px rgba(229,9,20,0.6);
+      transition:all 0.3s;
+    }
+    .prize-btn:hover {
+      transform:scale(1.08);
+      box-shadow:0 0 40px rgba(229,9,20,0.9);
+    }
+
+    /* ── Modal ── */
+    .modal {
+      display:none;
+      position:fixed;
+      z-index:2000;
+      left:0;
+      top:0;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,0.92);
+      overflow-y:auto;
+    }
+    .modal-content {
+      background:#0f0f0f;
+      margin:8% auto;
+      padding:40px 30px;
+      border:3px solid #e50914;
+      width:90%;
+      max-width:520px;
+      border-radius:16px;
+      box-shadow:0 0 50px rgba(229,9,20,0.5);
+      position:relative;
+    }
+    .close {
+      color:#aaa;
+      float:right;
+      font-size:42px;
+      font-weight:bold;
+      cursor:pointer;
+      margin-top:-15px;
+    }
+    .close:hover { color:#fff; }
+
+    .payment-info {
+      font-size:1.15rem;
+      background:#1a1a1a;
+      padding:18px;
+      border-radius:10px;
+      margin:20px 0 30px;
+      line-height:1.6;
+      border-left:4px solid #25D366;
+    }
+
+    label {
+      display:block;
+      margin:18px 0 8px;
+      font-size:1.1rem;
+      color:#ddd;
+      text-align:left;
+    }
+
+    input[type="number"],
+    input[type="text"],
+    select {
+      width:100%;
+      padding:14px 16px;
+      margin:6px 0 20px;
+      font-size:1.15rem;
+      border-radius:8px;
+      border:2px solid #444;
+      background:#1c1c1c;
+      color:#fff;
+      box-sizing:border-box;
+    }
+    select {
+      appearance:none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='6'><polygon points='0,0 12,0 6,6' fill='%23aaa'/></svg>");
+      background-repeat:no-repeat;
+      background-position:right 16px center;
+      padding-right:36px;
+    }
+
+    #submit-pool {
+      width:100%;
+      padding:18px;
+      font-size:1.45rem;
+      font-weight:bold;
+      background:linear-gradient(135deg, #25D366, #1DA851);
+      color:white;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      margin:30px 0 10px;
+      box-shadow:0 6px 20px rgba(37,211,102,0.5);
+      transition:all 0.25s;
+    }
+    #submit-pool:hover:not(:disabled) {
+      background:linear-gradient(135deg, #1DA851, #25D366);
+      transform:translateY(-3px);
+      box-shadow:0 12px 30px rgba(37,211,102,0.7);
+    }
+    #submit-pool:disabled {
+      background:#555;
+      cursor:not-allowed;
+      transform:none;
+      box-shadow:none;
+      opacity:0.7;
+    }
+
+    #pool-msg {
+      margin-top:20px;
+      font-size:1.2rem;
+      min-height:70px;
+      line-height:1.5;
+    }
+
+    @media (max-width:600px) {
+      h1 { font-size:2.3rem; }
+      .countdown { font-size:1.35rem; }
+      .modal-content { padding:30px 20px; margin:10% auto 5%; }
+      #submit-pool { font-size:1.35rem; padding:16px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>MBAVU VS MAJEMBE ARENA</h1>
+  <p class="welcome">VURUGU APRIL 4, 2026 – KASARANI STADIUM 🔥</p>
+  <div class="countdown" id="countdown">Loading countdown...</div>
+</header>
+
+<div class="video-container">
+  <iframe src="https://www.youtube.com/embed/Ri74aJKk7VQ?rel=0" title="Mbavu vs Majembe Hype" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+<div class="container">
+  <div class="event-info">
+    <h2 style="text-align:center; color:#ffcc00;">The Fight of the Year – April 4, 2026</h2>
+    <p><strong>Date:</strong> Saturday, April 4, 2026</p>
+    <p><strong>Venue:</strong> Kasarani Stadium Indoor Arena, Nairobi</p>
+    <p><strong>Organizer:</strong> Oga Obinna / Obinna TV Studios</p>
+    <p>This is more than boxing — it's a national moment. Mbavu Destroyer vs Majembe: two viral heavy-hitters, one ring, massive stakes.</p>
+    <p>Winner takes home at least <strong>KSh 1 Million</strong> + gym subscription, supplements, and eternal bragging rights.</p>
+  </div>
+
+  <div class="prize-section">
+    <h2 style="color:#ffcc00; margin-bottom:15px;">Join Prize Pool</h2>
+    <p style="font-size:1.2rem; margin-bottom:25px;">Stake any amount – back your fighter now!</p>
+    <button class="prize-btn" onclick="openPoolModal()">JOIN PRIZE POOL 🔥</button>
+  </div>
+
+  <div class="gallery-section">
+    <div class="gallery-title">Mbavu Destroyer Gallery</div>
+    <div class="gallery">
+      <img src="https://i.ibb.co/bRJn5Gjv/cec8d3a3-900b-4fd8-ba72-2ffc30000891.jpg" alt="Mbavu 1">
+      <img src="https://i.ibb.co/FkY2fS6P/d29f7d0c-a43a-43f9-a3f6-2c5eae7fe3da.jpg" alt="Mbavu 2">
+      <img src="https://i.ibb.co/jvJLQ4gP/982a0dd4-bdc1-4f8e-bb0f-9941b10df00e.jpg" alt="Mbavu 3">
+    </div>
+    <div class="gallery-title">Majembe Gallery</div>
+    <div class="gallery">
+      <img src="https://i.ibb.co/zHsh7HxH/70a6220c-e81d-417d-b049-c0986a2c3faa.jpg" alt="Majembe 1">
+      <img src="https://i.ibb.co/5g52xMvy/f46baafb-9cf2-4cd4-8a53-0ea046612262.jpg" alt="Majembe 2">
+      <img src="https://i.ibb.co/k29hZsZq/89552ced-22a0-4ea8-92f9-eef81837aa4b.jpg" alt="Majembe 3">
+    </div>
+  </div>
+
+  <button class="share-btn" onclick="shareArena()">SHARE THE VURUGU – INVITE YOUR FRIENDS 🔥</button>
+</div>
+
+<!-- Prize Pool Modal -->
+<div id="poolModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closePoolModal()">×</span>
+    <h2>Join Prize Pool</h2>
+
+    <div class="payment-info">
+      <strong>Pay via M-Pesa:</strong><br>
+      Paybill: <strong>247247</strong><br>
+      Account No: <strong>1090186882069</strong><br>
+      <em>After successful payment, copy the M-Pesa Reference Number (starts with QH... or similar) and paste below.</em>
+    </div>
+
+    <label for="poolAmount">Amount (KSh) – minimum 50</label>
+    <input id="poolAmount" type="number" placeholder="e.g. 500" min="50" step="50" required>
+
+    <label for="poolRefNo">M-Pesa Reference Number</label>
+    <input id="poolRefNo" type="text" placeholder="e.g. QHRUVWW or QHABC1234" required>
+
+    <label for="poolFighter">I am backing</label>
+    <select id="poolFighter" required>
+      <option value="" disabled selected>— Select Fighter —</option>
+      <option value="Mbavu">Mbavu Destroyer</option>
+      <option value="Majembe">Majembe</option>
+    </select>
+
+    <button id="submit-pool" onclick="submitPoolEntry()">SUBMIT ENTRY</button>
+
+    <div id="pool-msg"></div>
+  </div>
+</div>
+
+<script>
+// Access Check (unchanged)
+const params = new URLSearchParams(window.location.search);
+const accessEmail = params.get('access');
+if (!accessEmail) {
+  alert("No access token found. Please login first.");
+  window.location.href = "login.html";
+}
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCWnR_nG5OrIdzCCuOjwRSioEFKi9nFVR5DifZqhM70QoN_FK3nFvqnjYaErc50A9E/exec";
+fetch(`${SCRIPT_URL}?action=check_access&email=${encodeURIComponent(accessEmail)}`)
+  .then(res => res.json())
+  .then(data => {
+    if (data.result !== "valid") {
+      alert("Access denied or expired. Please login again.");
+      window.location.href = "login.html";
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Cannot verify access right now. Try again later.");
+  });
+
+// Countdown (unchanged)
+function updateCountdown() {
+  const fightDate = new Date("2026-04-04T20:00:00+03:00").getTime();
+  const now = new Date().getTime();
+  const distance = fightDate - now;
+  if (distance < 0) {
+    document.getElementById("countdown").innerHTML = "THE FIGHT IS LIVE! 🔥";
+    return;
+  }
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  document.getElementById("countdown").innerHTML = `Fight starts in: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// Share (unchanged)
+function shareArena() {
+  const link = window.location.href.split('?')[0];
+  const message = `Locked in for the VURUGU! Mbavu vs Majembe – April 4, 2026 🔥\n\nJoin the arena: ${link}\n\nWho you backing?`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank");
+}
+
+// Modal controls
+function openPoolModal() {
+  document.getElementById("poolModal").style.display = "block";
+  document.getElementById("pool-msg").innerHTML = "";
+  document.getElementById("submit-pool").disabled = false;
+  document.getElementById("submit-pool").textContent = "SUBMIT ENTRY";
+}
+
+function closePoolModal() {
+  document.getElementById("poolModal").style.display = "none";
+}
+
+// Submit logic with loading + better feedback
+async function submitPoolEntry() {
+  const btn = document.getElementById("submit-pool");
+  const msg = document.getElementById("pool-msg");
+  const amount = document.getElementById("poolAmount").value.trim();
+  const refNo  = document.getElementById("poolRefNo").value.trim();
+  const fighter = document.getElementById("poolFighter").value;
+
+  if (!amount || Number(amount) < 50 || !refNo || refNo.length < 5 || !fighter) {
+    msg.style.color = "#ff5555";
+    msg.textContent = "Please complete all fields correctly (min KSh 50 + valid Ref No)";
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "SENDING...";
+  msg.style.color = "#ffcc00";
+  msg.textContent = "Processing your entry — please wait...";
+
+  const form = new URLSearchParams();
+  form.append("action", "join_pool");
+  form.append("email", accessEmail);
+  form.append("amount", amount);
+  form.append("refNo", refNo);
+  form.append("fighter", fighter);
+
+  try {
+    const res = await fetch(SCRIPT_URL, { method: "POST", body: form });
+    const data = await res.json();
+
+    if (data.result === "success") {
+      msg.style.color = "#25D366";
+      msg.innerHTML = "✓ Entry recorded!<br>Thank you — Ref No will be verified soon.";
+      setTimeout(closePoolModal, 4800);
+    } else {
+      throw new Error(data.message || "Server rejected entry");
+    }
+  } catch (err) {
+    console.error(err);
+    msg.style.color = "#ff5555";
+    msg.textContent = err.message.includes("fetch") ? "No internet — check connection" : "Error: " + err.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "SUBMIT ENTRY";
+  }
+}
+
+// Close on outside click
+window.onclick = function(e) {
+  if (e.target === document.getElementById("poolModal")) closePoolModal();
+}
+</script>
+</body>
+</html>

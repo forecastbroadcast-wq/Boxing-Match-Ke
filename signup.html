@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join the Vurugu – Mbavu vs Majembe April 4 🔥</title>
+  <style>
+    body { margin:0; font-family:Arial, sans-serif; background:#000; color:#fff; text-align:center; padding:15px; overflow-x:hidden; }
+    .box { max-width:420px; margin:40px auto; background:linear-gradient(rgba(20,20,20,0.92), rgba(10,10,10,0.95)); padding:30px; border-radius:16px; border:3px solid #e50914; box-shadow:0 0 30px rgba(229,9,20,0.4); }
+    h1 { color:#e50914; font-size:2.4rem; margin:0 0 8px; text-shadow:0 0 15px #e50914; }
+    h2 { font-size:1.6rem; margin:10px 0; color:#ffcc00; }
+    p.tag { font-size:1.15rem; margin:15px 0; line-height:1.4; }
+    .countdown { font-size:1.4rem; color:#ff4444; font-weight:bold; margin:20px 0; }
+    input, select { width:100%; padding:14px; margin:12px 0; font-size:16px; border-radius:8px; border:none; background:#222; color:#fff; }
+    button { background:#e50914; color:white; border:none; padding:16px 50px; font-size:1.3rem; border-radius:10px; cursor:pointer; margin:20px 0 10px; font-weight:bold; transition:0.3s; }
+    button:hover { background:#ff2a2a; transform:scale(1.05); }
+    #msg { min-height:60px; font-size:1.2rem; margin:15px 0; }
+    .link { color:#4da6ff; cursor:pointer; text-decoration:underline; font-size:1.1rem; }
+    .team-select { display:flex; justify-content:space-around; margin:20px 0; }
+    .team-btn { padding:12px 25px; font-size:1.1rem; border-radius:8px; cursor:pointer; transition:0.3s; min-width:140px; }
+    .team-mbavu { background:#8B0000; color:white; border:2px solid #e50914; }
+    .team-majembe { background:#1a1aff; color:white; border:2px solid #4da6ff; }
+    .team-btn.active { transform:scale(1.12); box-shadow:0 0 20px currentColor; }
+    .trash { font-size:0.95rem; color:#ffcc00; margin-top:25px; font-style:italic; }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h1>MBAVU VS MAJEMBE</h1>
+  <h2>VURUGU APRIL 4, 2026 – KASARANI 🔥</h2>
+  
+  <p class="tag"><strong>President Ruto pledged millions</strong> – Oga Obinna hosting – Dorcas Rigathi bought 400 tickets – Prize pool exploding!</p>
+  
+  <div class="countdown" id="countdown">Loading countdown...</div>
+  
+  <p class="tag">Pick your side NOW – be part of Kenyan history. The winner's fans will flex forever!</p>
+
+  <input id="name" placeholder="Your Name / Nickname" required>
+  <input id="email" placeholder="Your Email (for access + updates)" required type="email">
+
+  <h3>Choose Your Fighter</h3>
+  <div class="team-select">
+    <div id="mbavu" class="team-btn team-mbavu active" onclick="selectTeam('Mbavu')">Team Mbavu Destroyer</div>
+    <div id="majembe" class="team-btn team-majembe" onclick="selectTeam('Majembe')">Team Majembe</div>
+  </div>
+
+  <button onclick="doSignup()">JOIN THE FIGHT & CLAIM YOUR SPOT</button>
+
+  <p id="msg"></p>
+
+  <p class="trash">"Mbavu will snatch girlfriend after KO" – "Majembe quits boxing if loses" – Trash talk already wild!</p>
+
+  <p>Already picked a side? <span class="link" onclick="location.href='login.html'">Login here</span></p>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCWnR_nG5OrIdzCCuOjwRSioEFKi9nFVR5DifZqhM70QoN_FK3nFvqnjYaErc50A9E/exec";
+let selectedTeam = "Mbavu"; // default
+
+function selectTeam(team) {
+  selectedTeam = team;
+  document.getElementById("mbavu").classList.toggle("active", team === "Mbavu");
+  document.getElementById("majembe").classList.toggle("active", team === "Majembe");
+}
+
+function updateCountdown() {
+  const fightDate = new Date("April 4, 2026 20:00:00").getTime();
+  const now = new Date().getTime();
+  const distance = fightDate - now;
+  if (distance < 0) {
+    document.getElementById("countdown").innerHTML = "THE VURUGU HAS BEGUN 🔥";
+    return;
+  }
+  const days = Math.floor(distance / (1000*60*60*24));
+  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+  document.getElementById("countdown").innerHTML = `Fight in: ${days}d ${hours}h ${minutes}m`;
+}
+setInterval(updateCountdown, 60000);
+updateCountdown();
+
+async function doSignup() {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const msgEl = document.getElementById("msg");
+
+  if (!name || !email) {
+    msgEl.style.color = "#ff4444";
+    msgEl.textContent = "Fill name & email bro!";
+    return;
+  }
+  if (!email.includes("@")) {
+    msgEl.style.color = "#ff4444";
+    msgEl.textContent = "Valid email please";
+    return;
+  }
+
+  msgEl.style.color = "#aaa";
+  msgEl.textContent = "Locking your side... 🔥";
+
+  const form = new URLSearchParams();
+  form.append("action", "signup");
+  form.append("name", name);
+  form.append("email", email);
+  form.append("team", selectedTeam);   // ← new field
+
+  try {
+    const r = await fetch(SCRIPT_URL, {method:"POST", body:form});
+    const data = await r.json();
+    if (data.result === "success") {
+      msgEl.style.color = "#25D366";
+      msgEl.textContent = `You’re in! Team ${selectedTeam} locked. Redirecting...`;
+      setTimeout(() => location.href = "login.html", 1800);
+    } else {
+      msgEl.style.color = "#ff4444";
+      msgEl.textContent = data.message || "Something blocked – try again";
+    }
+  } catch(e) {
+    msgEl.style.color = "#ff4444";
+    msgEl.textContent = "Network issue – check connection";
+  }
+}
+</script>
+</body>
+</html>

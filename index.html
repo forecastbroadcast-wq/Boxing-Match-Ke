@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mbavu vs Majembe – Vurugu April 4, 2026 🔥</title>
+  <style>
+    body {
+      margin:0;
+      font-family: Arial, sans-serif;
+      background:#000;
+      color:#fff;
+      text-align:center;
+      line-height:1.5;
+    }
+    header {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('https://i.ibb.co/zhZH3wxC/5a4eb419-5568-4a68-a8cb-24ca80846bfb.jpg') center/cover no-repeat;
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(229,9,20,0.15);
+      pointer-events: none;
+    }
+    h1 {
+      font-size: 3.5rem;
+      margin: 0 0 10px;
+      text-shadow: 0 0 20px #e50914, 3px 3px 10px black;
+      z-index: 1;
+    }
+    .tagline {
+      font-size: 1.8rem;
+      color: #ffcc00;
+      margin: 10px 0 30px;
+      max-width: 800px;
+      z-index: 1;
+    }
+    .countdown {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ff4444;
+      margin: 20px 0 40px;
+      text-shadow: 0 0 15px #ff4444;
+      z-index: 1;
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      z-index: 1;
+    }
+    .btn {
+      padding: 18px 50px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: white;
+    }
+    .btn-signup {
+      background: #e50914;
+      box-shadow: 0 0 20px #e50914;
+    }
+    .btn-login {
+      background: #1a1aff;
+      box-shadow: 0 0 20px #4da6ff;
+    }
+    .btn:hover {
+      transform: scale(1.08);
+    }
+    .info {
+      max-width: 900px;
+      margin: 60px auto 40px;
+      padding: 0 20px;
+    }
+    .info p {
+      font-size: 1.2rem;
+      margin: 20px 0;
+    }
+    .highlight {
+      color: #ffcc00;
+      font-weight: bold;
+    }
+    footer {
+      padding: 30px;
+      background: #111;
+      font-size: 0.95rem;
+      color: #aaa;
+    }
+    @media (max-width: 768px) {
+      h1 { font-size: 2.8rem; }
+      .tagline { font-size: 1.4rem; }
+      .countdown { font-size: 1.6rem; }
+      .btn { padding: 16px 40px; font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>MBAVU VS MAJEMBE</h1>
+  <p class="tagline">VURUGU – APRIL 4, 2026 | KASARANI STADIUM INDOOR ARENA | NAIROBI 🔥</p>
+  
+  <div class="countdown" id="countdown">Loading countdown...</div>
+
+  <div class="btn-group">
+    <a href="signup.html" class="btn btn-signup">JOIN NOW – PICK YOUR SIDE</a>
+    <a href="login.html" class="btn btn-login">ALREADY JOINED? LOGIN</a>
+  </div>
+</header>
+
+<div class="info">
+  <h2 style="color:#e50914; font-size:2.2rem;">The Fight Kenya Is Talking About</h2>
+  <p>From TikTok trash talk to the ring — <span class="highlight">Mbavu Destroyer</span> vs <span class="highlight">Majembe</span> is set to explode on <strong>April 4, 2026</strong> at Kasarani Stadium Indoor Arena.</p>
+  <p>Organized by <strong>Oga Obinna / Obinna TV Studios</strong>, this showdown has massive hype: President Ruto-level pledges, celebrity backing, and a prize pool that keeps growing.</p>
+  <p>Join the movement: sign up, lock in your team, and get access to the exclusive arena — photos, videos, updates, and more leading up to fight night.</p>
+</div>
+
+<footer>
+  © 2026 Mbavu vs Majembe Arena • Powered by the streets • All rights reserved
+</footer>
+
+<script>
+// Countdown to April 4, 2026 ~20:00 EAT
+function updateCountdown() {
+  const fightDate = new Date("2026-04-04T20:00:00+03:00").getTime();
+  const now = new Date().getTime();
+  const distance = fightDate - now;
+
+  if (distance < 0) {
+    document.getElementById("countdown").innerHTML = "THE VURUGU IS HERE! 🔥";
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  document.getElementById("countdown").innerHTML = 
+    `Fight in: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
+
+</body>
+</html>

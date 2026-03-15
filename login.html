@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login – Mbavu vs Majembe Vurugu</title>
+  <style>
+    body { margin:0; font-family:Arial,sans-serif; background:#000; color:#fff; text-align:center; padding:15px; }
+    .box { max-width:420px; margin:40px auto; background:linear-gradient(rgba(20,20,20,0.92), rgba(10,10,10,0.95)); padding:30px; border-radius:16px; border:3px solid #e50914; box-shadow:0 0 30px rgba(229,9,20,0.4); }
+    h1 { color:#e50914; font-size:2.4rem; margin:0 0 8px; text-shadow:0 0 15px #e50914; }
+    h2 { font-size:1.6rem; margin:10px 0; color:#ffcc00; }
+    p.tag { font-size:1.15rem; margin:15px 0; }
+    input { width:100%; padding:14px; margin:12px 0; font-size:16px; border-radius:8px; border:none; background:#222; color:#fff; }
+    button { background:#e50914; color:white; border:none; padding:16px 50px; font-size:1.3rem; border-radius:10px; cursor:pointer; margin:20px 0; font-weight:bold; transition:0.3s; }
+    button:hover { background:#ff2a2a; transform:scale(1.05); }
+    #msg { min-height:60px; font-size:1.2rem; margin:15px 0; }
+    .link { color:#4da6ff; cursor:pointer; text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h1>MBAVU VS MAJEMBE</h1>
+  <h2>LOGIN TO YOUR SIDE 🔥</h2>
+  
+  <p class="tag">April 4, 2026 – Kasarani – Millions on the line – Join the millions watching!</p>
+
+  <input id="email" placeholder="Your Email (used during signup)" required type="email">
+
+  <button onclick="doLogin()">ENTER THE ARENA</button>
+
+  <p id="msg"></p>
+
+  <p class="tag">Not locked in yet? <span class="link" onclick="location.href='signup.html'">Pick your fighter now</span></p>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCWnR_nG5OrIdzCCuOjwRSioEFKi9nFVR5DifZqhM70QoN_FK3nFvqnjYaErc50A9E/exec";
+
+async function doLogin() {
+  const email = document.getElementById("email").value.trim();
+  const msgEl = document.getElementById("msg");
+
+  if (!email) {
+    msgEl.style.color = "#ff4444";
+    msgEl.textContent = "Email required – don't ghost us!";
+    return;
+  }
+
+  msgEl.style.color = "#aaa";
+  msgEl.textContent = "Opening gate...";
+
+  const form = new URLSearchParams();
+  form.append("action", "login");
+  form.append("email", email);
+
+  try {
+    const r = await fetch(SCRIPT_URL, {method:"POST", body:form});
+    const data = await r.json();
+    if (data.result === "success") {
+      msgEl.style.color = "#25D366";
+      msgEl.textContent = "Access granted! Entering the Vurugu...";
+      const safe = encodeURIComponent(data.access);
+      setTimeout(() => location.href = `content.html?access=${safe}`, 1500);
+    } else {
+      msgEl.style.color = "#ff4444";
+      msgEl.textContent = data.message || "Not found – sign up first?";
+    }
+  } catch(e) {
+    msgEl.style.color = "#ff4444";
+    msgEl.textContent = "Connection lost – try again";
+  }
+}
+</script>
+</body>
+</html>
