@@ -279,38 +279,32 @@
   <div class="modal-content">
     <span class="close" onclick="closePoolModal()">×</span>
     <h2>Join Prize Pool</h2>
-    
+   
     <div class="payment-info">
       <strong>Pay via M-Pesa:</strong><br>
       Paybill: <strong>247247</strong><br>
       Account No: <strong>1090186882069</strong><br>
       <em>After successful payment, copy the M-Pesa Reference Number and paste below.</em>
     </div>
-
     <label for="poolAmount">Amount (KSh) – minimum 50</label>
     <input id="poolAmount" type="number" placeholder="e.g. 500" min="50" step="50" required>
-
     <label for="poolRefNo">M-Pesa Reference Number</label>
     <input id="poolRefNo" type="text" placeholder="e.g. QHABC1234" required>
-
     <label for="poolMobile">Mobile No to Receive Payment After Match</label>
     <input id="poolMobile" type="tel" placeholder="e.g. 0712345678 or 254712345678" required>
-
     <label for="poolFighter">I am backing</label>
     <select id="poolFighter" required>
       <option value="" disabled selected>— Select Fighter —</option>
       <option value="Mbavu">Mbavu Destroyer</option>
       <option value="Majembe">Majembe</option>
     </select>
-
     <button id="submit-pool" onclick="submitPoolEntry()">SUBMIT ENTRY</button>
-
     <div id="pool-msg"></div>
   </div>
 </div>
 
 <script>
-// Access Check
+// Access Check – uses original SCRIPT_URL (for login/signup/check_access)
 const params = new URLSearchParams(window.location.search);
 const accessEmail = params.get('access');
 if (!accessEmail) {
@@ -318,6 +312,8 @@ if (!accessEmail) {
   window.location.href = "login.html";
 }
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCWnR_nG5OrIdzCCuOjwRSioEFKi9nFVR5DifZqhM70QoN_FK3nFvqnjYaErc50A9E/exec";
+const PRIZE_POOL_URL = "https://script.google.com/macros/s/AKfycbxQVLeKp9PzqoT_HP5KJZFYrQEcT3qxvR1yep7OFnPqZQfT8f3ALzQDPi7-Ki9gLqjkMA/exec";
+
 fetch(`${SCRIPT_URL}?action=check_access&email=${encodeURIComponent(accessEmail)}`)
   .then(res => res.json())
   .then(data => {
@@ -368,13 +364,13 @@ function closePoolModal() {
   document.getElementById("poolModal").style.display = "none";
 }
 
-// Submit logic
+// Submit logic – uses the NEW prize pool URL
 async function submitPoolEntry() {
   const btn = document.getElementById("submit-pool");
   const msg = document.getElementById("pool-msg");
-  const amount  = document.getElementById("poolAmount").value.trim();
-  const refNo   = document.getElementById("poolRefNo").value.trim();
-  const mobile  = document.getElementById("poolMobile").value.trim();
+  const amount = document.getElementById("poolAmount").value.trim();
+  const refNo = document.getElementById("poolRefNo").value.trim();
+  const mobile = document.getElementById("poolMobile").value.trim();
   const fighter = document.getElementById("poolFighter").value;
 
   if (!amount || Number(amount) < 50 || !refNo || refNo.length < 5 || !mobile || mobile.length < 9 || !fighter) {
@@ -398,16 +394,16 @@ async function submitPoolEntry() {
   ].join('&');
 
   try {
-    await fetch(SCRIPT_URL, {
+    await fetch(PRIZE_POOL_URL, {
       method: "POST",
-      mode: "no-cors",           // ← This is the key change
+      mode: "no-cors",
       redirect: "follow",
       body: bodyText
     });
 
-    // Since no-cors hides response, we assume success
+    // no-cors hides response → assume success
     msg.style.color = "#25D366";
-    msg.innerHTML = "✓ Entry sent!<br>Thank you — check Sheet2 soon. Ref & mobile saved.";
+    msg.innerHTML = "✓ Entry sent!<br>Thank you All The Best To Your Side. Ref & mobile saved.";
     setTimeout(closePoolModal, 4000);
   } catch (err) {
     console.error(err);
