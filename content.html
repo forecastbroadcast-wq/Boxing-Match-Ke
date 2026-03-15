@@ -100,7 +100,6 @@
       background:#1ebe57;
       transform:scale(1.05);
     }
-
     /* ── Prize Pool Section ── */
     .prize-section {
       margin:60px auto;
@@ -126,7 +125,6 @@
       transform:scale(1.08);
       box-shadow:0 0 40px rgba(229,9,20,0.9);
     }
-
     /* ── Modal ── */
     .modal {
       display:none;
@@ -159,7 +157,6 @@
       margin-top:-15px;
     }
     .close:hover { color:#fff; }
-
     .payment-info {
       font-size:1.15rem;
       background:#1a1a1a;
@@ -169,7 +166,6 @@
       line-height:1.6;
       border-left:4px solid #25D366;
     }
-
     label {
       display:block;
       margin:18px 0 8px;
@@ -177,9 +173,9 @@
       color:#ddd;
       text-align:left;
     }
-
     input[type="number"],
     input[type="text"],
+    input[type="tel"],
     select {
       width:100%;
       padding:14px 16px;
@@ -198,7 +194,6 @@
       background-position:right 16px center;
       padding-right:36px;
     }
-
     #submit-pool {
       width:100%;
       padding:18px;
@@ -225,14 +220,12 @@
       box-shadow:none;
       opacity:0.7;
     }
-
     #pool-msg {
       margin-top:20px;
       font-size:1.2rem;
       min-height:70px;
       line-height:1.5;
     }
-
     @media (max-width:600px) {
       h1 { font-size:2.3rem; }
       .countdown { font-size:1.35rem; }
@@ -242,17 +235,14 @@
   </style>
 </head>
 <body>
-
 <header>
   <h1>MBAVU VS MAJEMBE ARENA</h1>
   <p class="welcome">VURUGU APRIL 4, 2026 – KASARANI STADIUM 🔥</p>
   <div class="countdown" id="countdown">Loading countdown...</div>
 </header>
-
 <div class="video-container">
   <iframe src="https://www.youtube.com/embed/Ri74aJKk7VQ?rel=0" title="Mbavu vs Majembe Hype" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
-
 <div class="container">
   <div class="event-info">
     <h2 style="text-align:center; color:#ffcc00;">The Fight of the Year – April 4, 2026</h2>
@@ -262,13 +252,11 @@
     <p>This is more than boxing — it's a national moment. Mbavu Destroyer vs Majembe: two viral heavy-hitters, one ring, massive stakes.</p>
     <p>Winner takes home at least <strong>KSh 1 Million</strong> + gym subscription, supplements, and eternal bragging rights.</p>
   </div>
-
   <div class="prize-section">
     <h2 style="color:#ffcc00; margin-bottom:15px;">Join Prize Pool</h2>
     <p style="font-size:1.2rem; margin-bottom:25px;">Stake any amount – back your fighter now!</p>
     <button class="prize-btn" onclick="openPoolModal()">JOIN PRIZE POOL 🔥</button>
   </div>
-
   <div class="gallery-section">
     <div class="gallery-title">Mbavu Destroyer Gallery</div>
     <div class="gallery">
@@ -283,7 +271,6 @@
       <img src="https://i.ibb.co/k29hZsZq/89552ced-22a0-4ea8-92f9-eef81837aa4b.jpg" alt="Majembe 3">
     </div>
   </div>
-
   <button class="share-btn" onclick="shareArena()">SHARE THE VURUGU – INVITE YOUR FRIENDS 🔥</button>
 </div>
 
@@ -292,19 +279,22 @@
   <div class="modal-content">
     <span class="close" onclick="closePoolModal()">×</span>
     <h2>Join Prize Pool</h2>
-
+    
     <div class="payment-info">
       <strong>Pay via M-Pesa:</strong><br>
       Paybill: <strong>247247</strong><br>
       Account No: <strong>1090186882069</strong><br>
-      <em>After successful payment, copy the M-Pesa Reference Number (starts with QH... or similar) and paste below.</em>
+      <em>After successful payment, copy the M-Pesa Reference Number and paste below.</em>
     </div>
 
     <label for="poolAmount">Amount (KSh) – minimum 50</label>
     <input id="poolAmount" type="number" placeholder="e.g. 500" min="50" step="50" required>
 
     <label for="poolRefNo">M-Pesa Reference Number</label>
-    <input id="poolRefNo" type="text" placeholder="e.g. QHRUVWW or QHABC1234" required>
+    <input id="poolRefNo" type="text" placeholder="e.g. QHABC1234" required>
+
+    <label for="poolMobile">Mobile No to Receive Payment After Match</label>
+    <input id="poolMobile" type="tel" placeholder="e.g. 0712345678 or 254712345678" required>
 
     <label for="poolFighter">I am backing</label>
     <select id="poolFighter" required>
@@ -320,7 +310,7 @@
 </div>
 
 <script>
-// Access Check (unchanged)
+// Access Check
 const params = new URLSearchParams(window.location.search);
 const accessEmail = params.get('access');
 if (!accessEmail) {
@@ -341,7 +331,7 @@ fetch(`${SCRIPT_URL}?action=check_access&email=${encodeURIComponent(accessEmail)
     alert("Cannot verify access right now. Try again later.");
   });
 
-// Countdown (unchanged)
+// Countdown
 function updateCountdown() {
   const fightDate = new Date("2026-04-04T20:00:00+03:00").getTime();
   const now = new Date().getTime();
@@ -359,7 +349,7 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// Share (unchanged)
+// Share
 function shareArena() {
   const link = window.location.href.split('?')[0];
   const message = `Locked in for the VURUGU! Mbavu vs Majembe – April 4, 2026 🔥\n\nJoin the arena: ${link}\n\nWho you backing?`;
@@ -378,16 +368,18 @@ function closePoolModal() {
   document.getElementById("poolModal").style.display = "none";
 }
 
+// Submit logic
 async function submitPoolEntry() {
   const btn = document.getElementById("submit-pool");
   const msg = document.getElementById("pool-msg");
-  const amount = document.getElementById("poolAmount").value.trim();
-  const refNo  = document.getElementById("poolRefNo").value.trim();
+  const amount  = document.getElementById("poolAmount").value.trim();
+  const refNo   = document.getElementById("poolRefNo").value.trim();
+  const mobile  = document.getElementById("poolMobile").value.trim();
   const fighter = document.getElementById("poolFighter").value;
 
-  if (!amount || Number(amount) < 50 || !refNo || refNo.length < 5 || !fighter) {
+  if (!amount || Number(amount) < 50 || !refNo || refNo.length < 5 || !mobile || mobile.length < 9 || !fighter) {
     msg.style.color = "#ff5555";
-    msg.textContent = "Please complete all fields correctly (min KSh 50 + valid Ref No)";
+    msg.textContent = "Please complete all fields correctly (min KSh 50, valid Ref No, mobile number, fighter)";
     return;
   }
 
@@ -397,15 +389,15 @@ async function submitPoolEntry() {
   msg.textContent = "Processing your entry — please wait...";
 
   // Build body as plain text (this avoids preflight in many cases)
-  const bodyText = `action=join_pool&email=${encodeURIComponent(accessEmail)}&amount=${encodeURIComponent(amount)}&refNo=${encodeURIComponent(refNo)}&fighter=${encodeURIComponent(fighter)}`;
+  const bodyText = `action=join_pool&email=${encodeURIComponent(accessEmail)}&amount=${encodeURIComponent(amount)}&refNo=${encodeURIComponent(refNo)}&mobileNo=${encodeURIComponent(mobile)}&fighter=${encodeURIComponent(fighter)}`;
 
   try {
     const res = await fetch(SCRIPT_URL, {
       method: "POST",
-      mode: "cors",              // keep cors (default)
+      mode: "cors",
       redirect: "follow",
       headers: {
-        "Content-Type": "text/plain;charset=utf-8"   // ← THIS is the key change!
+        "Content-Type": "text/plain;charset=utf-8"
       },
       body: bodyText
     });
@@ -418,7 +410,7 @@ async function submitPoolEntry() {
 
     if (data.result === "success") {
       msg.style.color = "#25D366";
-      msg.innerHTML = "✓ Entry recorded!<br>Thank you — Ref No will be verified soon.";
+      msg.innerHTML = "✓ Entry recorded!<br>Thank you — Ref No & mobile will be verified soon.";
       setTimeout(closePoolModal, 4800);
     } else {
       throw new Error(data.message || "Server rejected entry");
