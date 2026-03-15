@@ -378,7 +378,6 @@ function closePoolModal() {
   document.getElementById("poolModal").style.display = "none";
 }
 
-// Submit logic with loading + better feedback
 async function submitPoolEntry() {
   const btn = document.getElementById("submit-pool");
   const msg = document.getElementById("pool-msg");
@@ -397,15 +396,24 @@ async function submitPoolEntry() {
   msg.style.color = "#ffcc00";
   msg.textContent = "Processing your entry — please wait...";
 
-  const form = new URLSearchParams();
-  form.append("action", "join_pool");
-  form.append("email", accessEmail);
-  form.append("amount", amount);
-  form.append("refNo", refNo);
-  form.append("fighter", fighter);
+  // Build body as plain text (this avoids preflight in many cases)
+  const bodyText = `action=join_pool&email=${encodeURIComponent(accessEmail)}&amount=${encodeURIComponent(amount)}&refNo=${encodeURIComponent(refNo)}&fighter=${encodeURIComponent(fighter)}`;
 
   try {
-    const res = await fetch(SCRIPT_URL, { method: "POST", body: form });
+    const res = await fetch(SCRIPT_URL, {
+      method: "POST",
+      mode: "cors",              // keep cors (default)
+      redirect: "follow",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"   // ← THIS is the key change!
+      },
+      body: bodyText
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
     const data = await res.json();
 
     if (data.result === "success") {
@@ -416,9 +424,11 @@ async function submitPoolEntry() {
       throw new Error(data.message || "Server rejected entry");
     }
   } catch (err) {
-    console.error(err);
+    console.error("Fetch error:", err);
     msg.style.color = "#ff5555";
-    msg.textContent = err.message.includes("fetch") ? "No internet — check connection" : "Error: " + err.message;
+    msg.textContent = err.message.includes("fetch") || err.message.includes("CORS")
+      ? "Connection issue (CORS/network) — try again or check console"
+      : "Error: " + err.message;
   } finally {
     btn.disabled = false;
     btn.textContent = "SUBMIT ENTRY";
